@@ -1,0 +1,45 @@
+
+version: '3.1'
+
+services:
+
+  # MySQL
+  db:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: sbc
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - "/var/mysql/data/db:/var/lib/mysql"
+      - "/home/blockchain/devops/mysql/my.cnf:/etc/mysql/my.cnf"
+    ports:
+      - "3306:3306"
+  
+  # Web Client For MySQL
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8282:8080
+
+
+  # https://hub.docker.com/r/bitnami/redis/
+  # sudo docker exec -it redis /bin/bash  
+  redis:
+    image: 'bitnami/redis:latest'
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      # - ALLOW_EMPTY_PASSWORD=yes
+      # - REDIS_DISABLE_COMMANDS=FLUSHDB,FLUSHALL
+      - REDIS_PASSWORD=111111
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '6379:6379'
+    volumes:
+      - '/home/blockchain/devops/redis:/bitnami/redis'
+      # - '/path/to/your_redis.conf:/opt/bitnami/redis/etc/redis.conf'
+
