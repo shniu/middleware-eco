@@ -53,3 +53,7 @@ neilpang/acme.sh \
 MAILTO=""
 10 5 * * * docker run --rm -v /mnt/docker/acme.sh:/acme.sh -v /mnt/docker/sites/config:/certs neilpang/acme.sh --renew-all && docker restart app-server
 ```
+
+## Other
+
+- https://github.com/Valian/docker-nginx-auto-ssl
