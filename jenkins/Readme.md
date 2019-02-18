@@ -1,6 +1,12 @@
 
 
-### Jenkins
+### Jenkin on Ubuntu 16.04
+
+由于使用 Docker 启动 Jenkins 时，在 Jenkins 容器内部运行 docker 命令，报 `command not found`，一直无法解决，所以直接在操作系统上安装 Jenkins。
+
+安装脚本：install_jenkins_on_ubuntu16.04.sh
+
+### Jenkins on Docker
 
 - [使用Maven构建Java应用程序](https://jenkins.io/zh/doc/tutorials/build-a-java-app-with-maven/)
 
