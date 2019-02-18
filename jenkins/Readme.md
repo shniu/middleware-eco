@@ -6,6 +6,10 @@
 
 安装脚本：install_jenkins_on_ubuntu16.04.sh
 
+- 安装完并启动 Jenkins 后，安装 blueocean 插件
+
+blueocean plugin: https://jenkins.io/doc/book/blueocean/getting-started/
+
 ### Jenkins on Docker
 
 - [使用Maven构建Java应用程序](https://jenkins.io/zh/doc/tutorials/build-a-java-app-with-maven/)
