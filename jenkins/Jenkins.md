@@ -38,3 +38,32 @@ pipeline {
 
 #### agent
 
+`agent` 指令告诉 Jenkins 在哪里以及如何执行 Pipeline 或者 Pipeline 子集, 所有的 Pipeline 都需要 `agent`.
+
+[agent](https://jenkins.io/doc/book/pipeline/syntax/#agent) 主要用来定义执行环境。
+
+#### 环境变量
+
+Jenkins 可以设置全局的和阶段 stage 的环境变量， 阶段性的环境变量只能在阶段定义的地方使用。
+
+```
+pipeline {
+    agent any
+
+    environment {
+        DISABLE_AUTH = 'true'
+        DB_ENGINE    = 'sqlite'
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                sh 'printenv'
+            }
+        }
+    }
+}
+```
+
+环境变量的另一个用途是[凭证信息处理](https://jenkins.io/doc/book/pipeline/jenkinsfile/#handling-credentials), 需要[凭证信息配置](https://jenkins.io/doc/book/using/using-credentials/#configuring-credentials)
+
