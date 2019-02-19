@@ -3,6 +3,8 @@
 
 > 演示项目: https://github.com/shniu/simple-java-maven-app
 
+> Pipeline examples: https://github.com/jenkinsci/pipeline-examples
+
 ### Jenkins Pipeline
 
 Jenkins Pipeline 是一套插件，将持续交付的实现和实施集成到 Jenkins 中。持续交付 Pipeline 自动化的表达了这样一种流程：**将基于版本控制管理的软件持续的交付到您的用户和消费者手中。** Jenkins Pipeline 定义在一个 `Jenkinsfile` 文件中。
@@ -66,6 +68,12 @@ pipeline {
 ```
 
 环境变量的另一个用途是[凭证信息处理](https://jenkins.io/doc/book/pipeline/jenkinsfile/#handling-credentials), 需要[凭证信息配置](https://jenkins.io/doc/book/using/using-credentials/#configuring-credentials)
+
+#### Parameters
+
+提供了一个用户在触发流水线时应该提供的参数列表, 这些参数可以在执行 Job 之前指定，使构建过程更加的灵活。
+
+如何使用 Parameters: https://st-g.de/2016/12/parametrized-jenkins-pipelines, 一般是在 Jenkinsfile 中使用，在执行任务前设置参数的值，可以在UI界面中设置。or  https://wiki.jenkins.io/display/JENKINS/Parameterized+Build
 
 ### Ref
 
