@@ -67,3 +67,12 @@ pipeline {
 
 环境变量的另一个用途是[凭证信息处理](https://jenkins.io/doc/book/pipeline/jenkinsfile/#handling-credentials), 需要[凭证信息配置](https://jenkins.io/doc/book/using/using-credentials/#configuring-credentials)
 
+### Ref
+
+* https://github.com/vishwakarmarhl/jenkinstest/blob/master/Jenkinsfile
+*   https://blog.sonatype.com/continuous-integration-in-pipeline-as-code-environment-with-jenkins-jacoco-nexus-and-sonarqube
+*   https://github.com/infinityworks/sample-jenkins-pipeline-job
+*   https://github.com/changdaye/jenkins-docker-demo
+*   https://github.com/vishwakarmarhl/jenkinstest
+*   maven https://www.jianshu.com/p/fd43b3d0fdb0
+*   https://www.baeldung.com/maven-goals-phases
