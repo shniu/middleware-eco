@@ -75,6 +75,10 @@ pipeline {
 
 如何使用 Parameters: https://st-g.de/2016/12/parametrized-jenkins-pipelines, 一般是在 Jenkinsfile 中使用，在执行任务前设置参数的值，可以在UI界面中设置。or  https://wiki.jenkins.io/display/JENKINS/Parameterized+Build
 
+#### Controlling your build environment
+
+[Controlling your build environment](https://github.com/jenkinsci/pipeline-model-definition-plugin/wiki/Controlling-your-build-environment) and https://github.com/jenkinsci/pipeline-model-definition-plugin/wiki
+
 ### Ref
 
 * https://github.com/vishwakarmarhl/jenkinstest/blob/master/Jenkinsfile
