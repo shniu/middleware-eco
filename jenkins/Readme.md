@@ -20,3 +20,8 @@ blueocean plugin: https://jenkins.io/doc/book/blueocean/getting-started/
 - [docker-jenkins](https://github.com/shazChaudhry/docker-jenkins)
 
 - [jenkins dockerfile custome](https://github.com/tomsun28/DockerFile/tree/master/jenkins-dockerUse)
+
+### 总结及问题
+
+- [Jenkins 的一些总结](jenkins.md)
+- [在实践 Jenkins 时遇到的一些问题集合](Jenkins-practiced-issues.md)
