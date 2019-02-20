@@ -23,5 +23,5 @@ blueocean plugin: https://jenkins.io/doc/book/blueocean/getting-started/
 
 ### 总结及问题
 
-- [Jenkins 的一些总结](jenkins.md)
+- [Jenkins 的一些总结](Jenkins.md)
 - [在实践 Jenkins 时遇到的一些问题集合](Jenkins-practiced-issues.md)
