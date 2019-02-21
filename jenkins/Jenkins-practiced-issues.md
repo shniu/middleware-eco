@@ -53,3 +53,26 @@ environment {
   SUB_MODULE_ARTIFACT_ID = readMavenPom(file: 'sub_module/pom.xml').getArtifactId()
 }
 ```
+
+#### 4. 在 readMavenPom 出错时，要在 scriptApproval 允许 Approvals
+
+![](https://upload-images.jianshu.io/upload_images/13639652-1df0c5d66a7a8000.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000/format/webp)
+
+readMavenPom 可以获取 pom.xml 中的配置信息，只能是静态读取文件中的内容，意思就是:
+
+```
+// 如果 pom.xml 中是这么定义的
+<version>${revision}</version>
+
+<properties>
+  <revision>1.0.0</revision>
+</properties>
+
+// 那么 
+readMavenPom(file: 'pom.xml').getVersion()  // 输出 ${revision}, 这就是静态读取
+
+// 如果读取到实际的值
+environment {
+  VERSION = readMavenPom(file: 'pom.xml').getProperties().getProperty("revision")  // 这里需要允许 Approvals
+}
+```
