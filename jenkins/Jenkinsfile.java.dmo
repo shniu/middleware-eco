@@ -1,0 +1,240 @@
+/*
+ * CI Flow:
+ *   Build -> Test(Unit) -> Sonar -> Verify deliver -> Build the latest docker image ->
+ *   Deploy ci -> Test(BVT/Acceptance functional test/Interface automation test) -> Email notify(When failed or unstable
+ *
+ *   https://github.com/vishwakarmarhl/jenkinstest/blob/master/Jenkinsfile
+ *   https://blog.sonatype.com/continuous-integration-in-pipeline-as-code-environment-with-jenkins-jacoco-nexus-and-sonarqube
+ *
+ *   https://github.com/infinityworks/sample-jenkins-pipeline-job
+ *   https://github.com/changdaye/jenkins-docker-demo
+ *   https://github.com/vishwakarmarhl/jenkinstest
+ *
+ *   maven https://www.jianshu.com/p/fd43b3d0fdb0
+ *   https://www.baeldung.com/maven-goals-phases
+ */
+
+pipeline {
+    // Global agent
+    agent {
+        label 'master'
+    }
+    /*agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }*/
+
+    environment {
+        MAVEN_JDK_IMAGE = 'maven:3.6-jdk-8'
+        DELIVER_ENV = '--spring.profiles.active=ci'
+        DEPLOY_ENV = 'ci'
+        PROJECT_VERSION = readMavenPom(file: 'pom.xml').getProperties().getProperty("revision")
+        TRADING_ARTIFACT_ID = readMavenPom(file: 'trading/pom.xml').getArtifactId()
+
+        IMAGE_PREFIX = 'registry.cn-beijing.aliyuncs.com/epuchain'
+    }
+
+    /*parameters {
+
+    }*/
+
+    stages {
+
+        stage("Build") {
+            agent {
+                docker {
+                    // image 'maven:3-alpine'
+                    image "${env.MAVEN_JDK_IMAGE}"
+                    reuseNode true
+                    args "-v ${HOME}/.m2:/root/.m2"
+                }
+            }
+
+            steps {
+                script {
+                    def v = sh(returnStdout: true, script: 'mvn help:evaluate -Dexpression=project.version | grep "^[^\\[]"').trim()
+                    // PROJECT_VERSION = version
+                    print  v
+                }
+                echo "Project version: ${env.PROJECT_VERSION}, Trading artifact id: ${env.TRADING_ARTIFACT_ID}"
+                sh 'mvn -B -DskipTests -Ddockerfile.skip clean package'
+            }
+        }
+
+        stage("Test - unit") {
+            agent {
+                docker {
+                    // image 'maven:3-alpine'
+                    image "${env.MAVEN_JDK_IMAGE}"
+                    reuseNode true
+                    args "-v ${HOME}/.m2:/root/.m2"
+                }
+            }
+
+            steps {
+                sh 'mvn test -Ddockerfile.skip'
+            }
+            post {
+                always {
+                    junit '**/target/surefire-reports/*.xml'
+                    /*junit 'admin/target/surefire-reports.xml'
+                    junit 'file/target/surefire-reports.xml'
+                    junit 'auth/target/surefire-reports.xml'
+                    junit 'common/target/surefire-reports.xml'
+                    junit 'domain/target/surefire-reports.xml'
+                    junit 'service/target/surefire-reports.xml'
+                    junit 'xrl-starter/target/surefire-reports.xml'*/
+                }
+            }
+        }
+
+        /* Jacoco https://stackoverflow.com/questions/41893846/jacoco-coverage-in-jenkins-pipeline */
+        stage("Jacoco") {
+            agent {
+                docker {
+                    // image 'maven:3-alpine'
+                    image "${env.MAVEN_JDK_IMAGE}"
+                    reuseNode true
+                    args "-v ${HOME}/.m2:/root/.m2"
+                }
+            }
+
+            steps {
+                echo 'Code Coverage'
+                jacoco()
+            }
+        }
+
+        /* Sonar */
+
+        // 不是很有必要
+        /*stage("Verify server start") {
+            agent {
+                docker {
+                    // image 'maven:3-alpine'
+                    image "${env.MAVEN_JDK_IMAGE}"
+                    reuseNode true
+                    args "-v ${HOME}/.m2:/root/.m2"
+                }
+            }
+
+            steps {
+                sh 'mvn help:evaluate -Dexpression=project.name | grep "^[^\\[]"'
+                sh 'chmod 777 ./jenkins/scripts/verify_deliver.sh'
+                sh "./jenkins/scripts/verify_deliver.sh ${env.DELIVER_ENV}"
+                *//* BVT here ? *//*
+            }
+        }*/
+
+        stage("Docker Image - Build trading") {
+            //agent {
+                //dockerfile {
+                //    filename 'Dockerfile'
+                //    reuseNode true
+                //    dir 'trading'
+                //    additionalBuildArgs "-t ${env.IMAGE_PREFIX}/${env.TRADING_ARTIFACT_ID}:latest --build-arg JAR_FILE=./target/${env.TRADING_ARTIFACT_ID}-${env.PROJECT_VERSION}.jar"
+                    // 需要 push to docker registry
+                //    args " --entrypoint='' "
+                //}
+                //label 'master'
+            //}
+
+            steps {
+                /* succeed */
+                // docker build -t ${env.IMAGE_PREFIX}/${env.TRADING_ARTIFACT_ID}:latest --build-arg JAR_FILE=./target/${env.TRADING_ARTIFACT_ID}-${env.PROJECT_VERSION}.jar trading
+                sh """
+                    echo 'Build succeed...'
+                    ls -al
+                    pwd
+                    docker info
+                    docker images
+                """
+            }
+        }
+
+        /*stage("Docker Image - Build admin") {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir 'admin'
+                    additionalBuildArgs "-t registry.cn-beijing.aliyuncs.com/epuchain/xrl-admin:latest --build-arg JAR_FILE=admin/target/"
+                    // label 'admin'
+                }
+            }
+
+            steps {
+                *//* succeed *//*
+                sh 'echo "Build admin image succeed"'
+            }
+        }
+
+        stage("Docker Image - Build file") {
+            agent {
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir 'file'
+                    additionalBuildArgs '-t registry.cn-beijing.aliyuncs.com/epuchain/xrl-file:latest --build-arg JAR_FILE=file/target/'
+                    // label 'file'
+                }
+            }
+
+            steps {
+                *//* succeed *//*
+                sh 'echo "Build file image succeed"'
+            }
+        }*/
+
+        stage("Deploy - CI") {
+
+            steps {
+                // 如果使用 swarm 的方式启动 ci 服务，需要解决镜像的问题，因为分布在多个机器上，就需要先 push image to registry, then pull on each server node
+                /* After successful deployment, we can run some tests to verify the services */
+                sh "./scripts/deploy.sh ${env.DEPLOY_ENV}'"
+            }
+        }
+
+        stage("Test - BVT/AFT") {
+            agent {
+                label 'master'
+            }
+
+            steps {
+                /* todo */
+                sh 'echo BVT/AFT ?'
+            }
+        }
+
+        /*stage("Sanity check") {
+            steps {
+                input "Does the ci environment look ok ?"
+            }
+        }
+
+        stage("Deploy - ST") {
+            steps {
+                sh './scripts/deploy.sh st'
+            }
+        }*/
+
+    }
+
+    post {
+        always {
+            /* clean up our workspace */
+            echo 'Always ...'
+        }
+        failure {
+            mail to: 'niushaohan@digcredit.com',
+                    subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "Something is wrong with ${env.BUILD_URL}"
+        }
+
+        unstable {
+            mail to: 'niushaohan@digcredit.com',
+                    subject: "Unstabled Pipeline: ${currentBuild.fullDisplayName}",
+                    body: "Something is unstable with ${env.BUILD_URL}"
+        }
+    }
+}
