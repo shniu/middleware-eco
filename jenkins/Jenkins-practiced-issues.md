@@ -76,3 +76,4 @@ environment {
   VERSION = readMavenPom(file: 'pom.xml').getProperties().getProperty("revision")  // 这里需要允许 Approvals
 }
 ```
+readMavenPom 可以读取到的信息：http://maven.apache.org/components/ref/3.3.9/maven-model/apidocs/org/apache/maven/model/Model.html
