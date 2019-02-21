@@ -79,6 +79,38 @@ pipeline {
 
 [Controlling your build environment](https://github.com/jenkinsci/pipeline-model-definition-plugin/wiki/Controlling-your-build-environment) and https://github.com/jenkinsci/pipeline-model-definition-plugin/wiki
 
+#### Pipeline steps
+
+[Pipeline steps](https://jenkins.io/doc/pipeline/steps/) 里包含了大量的可用于声明式 Pipeline 中的插件, 总结几个常用的。
+
+##### [sh](https://jenkins.io/doc/pipeline/steps/workflow-durable-task-step/#sh-shell-script)
+
+sh 被用在类 Unix 系统中执行 shell 脚本或者 shell 命令，用法如下：
+
+```
+// 常规用法
+sh 'echo "hello world"'
+sh 'pwd'
+sh 'java -version'
+sh """
+  mvn -version
+  ls -al
+  docker info
+  dockr run hello-world
+"""
+sh './script/start.sh'
+
+// 其他用法
+steps {
+    script {
+        def v = sh(returnStdout: true, script: 'mvn help:evaluate -Dexpression=project.version | grep "^[^\\[]"').trim()
+        print  v
+    }
+}
+
+```
+
+
 ### Ref
 
 * https://github.com/vishwakarmarhl/jenkinstest/blob/master/Jenkinsfile
