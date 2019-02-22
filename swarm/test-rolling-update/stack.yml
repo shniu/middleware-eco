@@ -35,7 +35,7 @@ services:
     image: nginx:alpine
     networks:
       - test_rolling_update
-	deploy:
+    deploy:
       replicas: 2
       restart_policy:
         condition: on-failure
