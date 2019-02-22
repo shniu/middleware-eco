@@ -1,0 +1,26 @@
+---
+
+# docker stack deploy -c stack.yml rolling
+# Modify the value of `image` to `redis:3.0.7`, then:
+# docker stack deploy -c stack.yml rolling
+
+version: "3.4"
+
+services:
+  redis:
+    image: redis:3.0.6
+    # image version update to 3.0.7
+    #image: redis:3.0.7
+    networks:
+      - test_rolling_update
+    stop_grace_period: 10s
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+        
+networks:
+  test_rolling_update:
