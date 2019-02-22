@@ -19,8 +19,7 @@ Let’s do a deep dive and get an overview of all the possible ways to use varia
 // 使用 docker inspect 可以查看镜像的 Env 配置
 docker inspect <image id>
 ```
-
-相关链接：
+相关链接
 1. [Docker docs builder arg](https://docs.docker.com/engine/reference/builder/#arg)
 2. [Docker docs docker compose arg](https://docs.docker.com/compose/compose-file/#args)
 3. [Docker docs environment var](https://docs.docker.com/engine/reference/builder/#environment-replacement)
@@ -32,3 +31,8 @@ docker inspect <image id>
 - [What's Wrong With The Docker :latest Tag?](https://vsupalov.com/docker-latest-tag/)
 
 Let’s go over the most frequent misconceptions and ways in which the :latest tag can cause suffering - and how to avoid the :latest pain.
+
+## 官方 Samples
+
+1. [Docker 官方 samples](https://docs.docker.com/samples/)
+2. [Docker labs](https://github.com/docker/labs)
