@@ -18,18 +18,18 @@ services:
       #placement:
         # https://docs.docker.com/engine/reference/commandline/service_create/#specify-service-constraints-constraint
         #constraints:
-	  #- node.role == manager
+          #- node.role == manager
           #- engine.labels.operatingsystem == ubuntu 14.04
-	#   
-	#preferences:
+ 
+        #preferences:
       replicas: 3
       restart_policy:
         condition: on-failure
       update_config:
         parallelism: 1
         delay: 10s
-	failure_action: rollback
-	# order: stop-first   # Support v3.4+, stop-first is default
+        failure_action: rollback
+        # order: stop-first   # Support v3.4+, stop-first is default
         
 networks:
   test_rolling_update:
