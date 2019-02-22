@@ -8,7 +8,8 @@ version: "3.4"
 
 services:
   redis:
-    image: redis:3.0.6
+    #image: redis:3.0.6
+    image: "redis:${REDIS_VERSION}"
     # image version update to 3.0.7
     #image: redis:3.0.7
     networks:
@@ -19,8 +20,7 @@ services:
         # https://docs.docker.com/engine/reference/commandline/service_create/#specify-service-constraints-constraint
         #constraints:
           #- node.role == manager
-          #- engine.labels.operatingsystem == ubuntu 14.04
- 
+          #- engine.labels.operatingsystem == ubuntu 14.04 
         #preferences:
       replicas: 3
       restart_policy:
@@ -30,6 +30,19 @@ services:
         delay: 10s
         failure_action: rollback
         # order: stop-first   # Support v3.4+, stop-first is default
-        
+
+  nginx:
+    image: nginx:alpine
+    networks:
+      - test_rolling_update
+	deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+
 networks:
   test_rolling_update:
