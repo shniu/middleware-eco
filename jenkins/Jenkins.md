@@ -115,6 +115,10 @@ steps {
 https://dingyuliang.me/jenkins-declarative-pipeline-use-conditional-stages/
 https://github.com/cvitter/jenkins-pipeline-examples/blob/master/Jenkinsfile-When
 
+#### Multi branch
+
+- [Pipeline-as-code with Multibranch Workflows in Jenkins](https://jenkins.io/blog/2015/12/03/pipeline-as-code-with-multibranch-workflows-in-jenkins/)
+
 
 ### Ref
 
