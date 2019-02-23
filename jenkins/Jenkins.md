@@ -110,6 +110,11 @@ steps {
 
 ```
 
+#### when 的使用
+
+https://dingyuliang.me/jenkins-declarative-pipeline-use-conditional-stages/
+https://github.com/cvitter/jenkins-pipeline-examples/blob/master/Jenkinsfile-When
+
 
 ### Ref
 
