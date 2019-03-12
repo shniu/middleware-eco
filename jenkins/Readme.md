@@ -32,6 +32,16 @@ java -jar jenkins-cli.jar -s http://192.168.1.34:18080/ -auth admin:123456 help
 # https://jenkins.io/redirect/cli
 ```
 
+### Jenkins script
+
+```
+# http://192.168.1.34:18080/script
+Jenkins.instance.pluginManager.plugins.each{
+  plugin -> 
+    println ("${plugin.getDisplayName()} (${plugin.getShortName()}): ${plugin.getVersion()}")
+}
+```
+
 ### 总结及问题
 
 - [Jenkins 的一些总结](Jenkins.md)
