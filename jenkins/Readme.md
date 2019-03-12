@@ -21,6 +21,17 @@ blueocean plugin: https://jenkins.io/doc/book/blueocean/getting-started/
 
 - [jenkins dockerfile custome](https://github.com/tomsun28/DockerFile/tree/master/jenkins-dockerUse)
 
+
+### Jenkins CLI
+
+```
+# http://192.168.1.34:18080/cli/
+wget http://192.168.1.34:18080/jnlpJars/jenkins-cli.jar
+java -jar jenkins-cli.jar -s http://192.168.1.34:18080/ -auth admin:123456 help
+
+# https://jenkins.io/redirect/cli
+```
+
 ### 总结及问题
 
 - [Jenkins 的一些总结](Jenkins.md)
