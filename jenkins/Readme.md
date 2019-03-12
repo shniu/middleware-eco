@@ -42,6 +42,8 @@ Jenkins.instance.pluginManager.plugins.each{
 }
 ```
 
+插件导入导出：https://github.com/mlabouardy/butler
+
 ### 总结及问题
 
 - [Jenkins 的一些总结](Jenkins.md)
