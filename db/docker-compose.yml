@@ -9,15 +9,15 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: sbc
+      MYSQL_DATABASE: gamerplus
       MYSQL_USER: dev
       MYSQL_PASSWORD: 123456
     volumes:
-      - "/var/mysql/data/db:/var/lib/mysql"
-      - "/home/blockchain/devops/mysql/my.cnf:/etc/mysql/my.cnf"
+      - "db-data:/var/lib/mysql"
+      - "./my.cnf:/etc/mysql/my.cnf"
     ports:
       - "3306:3306"
-  
+
   # Web Client For MySQL
   adminer:
     image: adminer
@@ -27,7 +27,7 @@ services:
 
 
   # https://hub.docker.com/r/bitnami/redis/
-  # sudo docker exec -it redis /bin/bash  
+  # sudo docker exec -it redis /bin/bash
   redis:
     image: 'bitnami/redis:latest'
     environment:
@@ -40,6 +40,8 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - '/home/blockchain/devops/redis:/bitnami/redis'
+      - db-data:/bitnami/redis
       # - '/path/to/your_redis.conf:/opt/bitnami/redis/etc/redis.conf'
 
+volumes:
+  db-data:
