@@ -1,0 +1,1 @@
+docker run -v /tmp/mysql-data:/sql -it arey/mysql-client -h <host> -P 3306 -D db1 -u gameplus --password -e "select HEX(game_id), game_type, cover_image, visit_url, enable, created_on, last_updated_on, game_icon, orientation, gradient_start_color, gradient_end_color from lobby_game where enable=1"
