@@ -9,6 +9,10 @@ ab命令会创建很多的并发访问线程，模拟多个访问者同时对某
 // ubuntu install
 sudo apt-get install apache2-utils
 
+// dokcer
+docker pull mocoso/apachebench
+docker run mocoso/apachebench ab -n 10 -c 10 https://www.baidu.com/
+
 ```
 
 #### 常见命令
