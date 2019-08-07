@@ -1,0 +1,15 @@
+{
+  "address":"测试1",
+  "backupMobile":"15212123434",
+  "bankId":1,
+  "city":"北京",
+  "district":"朝阳",
+  "email":"1234@126.com",
+  "loanAmount":400,
+  "loanTerm":3,
+  "loanUse":"企业贷款",
+  "mobile":"18621232321",
+  "name":"李四",
+  "productId":1,
+  "province":"北京"
+}
