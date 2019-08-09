@@ -1,3 +1,7 @@
 
 [all]
-127.0.0.1
+127.0.0.1 ansible_ssh_user=shniu
+
+[all:vars]
+user=shniu
+# ansible_ssh_pass=""

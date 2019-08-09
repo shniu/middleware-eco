@@ -1,7 +1,7 @@
 
 ### 生产环境部署
 
-阿里云生产环境部署
+阿里云生产环境部署, ansible 脚本参考 `middleware-eco/ansible/sample`
 
 - 获取准备好的服务器 ip 和用户名密码
 
@@ -26,6 +26,11 @@ $ sudo apt install ansible
 ```
 
 - 设置 SSH 免密登录
+
+使用 ansible playbook 实现批量的免密登录设置
+
+1. 需要安装 sshpass 程序 `apt-get install sshpass`, [参考这里](https://gist.github.com/arunoda/7790979)
+2. 使用 ansible 的 authorized_key 模块
 
 ```
 ssh-keygen -t  rsa

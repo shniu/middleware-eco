@@ -1,2 +1,12 @@
 ---
-# tasks file for infra
+- name: Verify server connectivity
+  ping:
+
+- name: Non secret authentication
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+- name: file doesnt exist, let me know, but continue
+  debug: msg="{{ lookup('file', '/idontexist', errors='warn') }}"
