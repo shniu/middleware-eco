@@ -29,10 +29,19 @@ $ sudo apt install ansible
 
 使用 ansible playbook 实现批量的免密登录设置
 
-1. 需要安装 sshpass 程序 `apt-get install sshpass`, [参考这里](https://gist.github.com/arunoda/7790979)
-2. 使用 ansible 的 authorized_key 模块
+```
+// 生成公私钥
+ssh-keygen -t  rsa
+```
+
+1. 需要安装 sshpass 程序 `apt-get install sshpass`, [参考这里](https://gist.github.com/arunoda/7790979), 装不上的话就用源码安装
+2. 第一次连接的时候需要检查private key，可以 `export ANSIBLE_HOST_KEY_CHECKING=False`
+3. 使用 ansible 的 authorized_key 模块
 
 ```
-ssh-keygen -t  rsa
-ssh-copy-id -i ~/.ssh/id_rsa.pub test@192.168.1.100
+// 下面的命令的主要作用是：
+//   1. 第一次执行时不检查ssh private key
+//   2. authorized_key 相当于批量执行 ssh-copy-id -i ~/.ssh/id_rsa.pub test@192.168.1.100
+//   3. --ask-pass 提示输入ssh的密码，这么做安全一些
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventory --ask-pass main.yml
 ```

@@ -2,11 +2,41 @@
 - name: Verify server connectivity
   ping:
 
+- name: Check ssh id_rsa.pub file exist
+  debug: msg="{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub', errors='strict') }}"
+
 - name: Non secret authentication
+  # https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html#authorized-key-module
   authorized_key:
     user: "{{ user }}"
     state: present
     key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
 
-- name: file doesnt exist, let me know, but continue
-  debug: msg="{{ lookup('file', '/idontexist', errors='warn') }}"
+# Docker and Docker compose
+- name: Check current docker-compose version
+  command: "docker-compose --version"
+  register: docker_compose_current_version
+  changed_when: false
+  failed_when: false
+
+- name: debug docker compose
+  debug: msg="docker_compose_version = {{ docker_compose_version }}"
+
+- name: debug docker compose2
+  debug: msg="docker_compose_path = {{ docker_compose_path }} {{docker_compose_current_version}}"
+
+- name: Delete existing docker-compose version if it's different.
+  file:
+    path: "{{ docker_compose_path }}"
+    state: absent
+  when: >
+    docker_compose_current_version.stdout is defined
+    and docker_compose_version not in docker_compose_current_version.stdout
+
+- name: Install Docker Compose (if configured).
+  become: yes
+  become_user: root
+  pip:
+    name: docker-compose
+    version: "{{ docker_compose_version if docker_compose_version else omit }}"
+    state: present
