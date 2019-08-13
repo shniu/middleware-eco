@@ -21,8 +21,8 @@
 2. 执行命令获取证书：
 ```
 docker run -it --rm \
---env Ali_Key=LTAIOmzEi7N6T5O1 \
---env Ali_Secret=BQ5vfth1zWHKtsv3kUeT4Qr5WVHrIo \
+--env Ali_Key=<key> \
+--env Ali_Secret=<secert> \
 -v /mnt/docker/acme.sh:/acme.sh \
 neilpang/acme.sh \
 --issue \
