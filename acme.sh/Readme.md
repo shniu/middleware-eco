@@ -57,3 +57,4 @@ MAILTO=""
 ## Other
 
 - https://github.com/Valian/docker-nginx-auto-ssl
+- https://github.com/nickjj/ansible-acme-sh
