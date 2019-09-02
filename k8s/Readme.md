@@ -1,11 +1,11 @@
 
 ## Kubernetes
 
-## Install kubectl
+### Install kubectl
 
 - [install kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
 
-## 使用 minikube 搭建 kubernates 集群
+### 使用 minikube 搭建 kubernates 集群
 
 ```
 // 1. https://minikube.sigs.k8s.io/docs/start/，安装minikube
