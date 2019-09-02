@@ -49,3 +49,10 @@ Other Commands:
 
 Use "minikube <command> --help" for more information about a given command.
 ```
+
+### minikube 上的操作
+
+```
+// 启动 kubernates 的 dashboard ui
+minikube dashboard
+```
