@@ -1,6 +1,8 @@
 
 ### minikube install k8s cluster
 
+使用 minikube 搭建的 k8s 集群仅限非生产环境使用
+
 ```
 // 1. https://minikube.sigs.k8s.io/docs/start/，安装minikube
 // 2. 启动kubernates集群
