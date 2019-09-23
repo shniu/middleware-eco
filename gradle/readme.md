@@ -17,7 +17,7 @@ gradle init --type java-application --test-framework junit
 ### 常用插件
 
 - [Java Plugin](https://docs.gradle.org/current/userguide/java_plugin.html#java_plugin)
-- [idea Plugin]()
+- [idea Plugin](https://docs.gradle.org/current/userguide/idea_plugin.html)
 
 ### gradle samples
 
