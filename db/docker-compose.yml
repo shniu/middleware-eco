@@ -13,7 +13,7 @@ services:
       MYSQL_USER: dev
       MYSQL_PASSWORD: 123456
     volumes:
-      - "db-data:/var/lib/mysql"
+      - "/Users/shniu/git/github/middleware-eco/db/playground/master:/var/lib/mysql"
       - "./my.cnf:/etc/mysql/my.cnf"
     ports:
       - "3306:3306"
@@ -30,6 +30,7 @@ services:
   # sudo docker exec -it redis /bin/bash
   redis:
     image: 'bitnami/redis:latest'
+    restart: always
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       # - ALLOW_EMPTY_PASSWORD=yes
@@ -40,8 +41,8 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - db-data:/bitnami/redis
+      - "/Users/shniu/git/github/middleware-eco/db/playground/redis:/bitnami/redis"
       # - '/path/to/your_redis.conf:/opt/bitnami/redis/etc/redis.conf'
 
-volumes:
-  db-data:
+# volumes:
+#   db-data:
